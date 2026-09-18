@@ -1,5 +1,5 @@
 [project]
-name = "pygame_app"
+name = "digital_ic_simulator"
 version = "0.1.0"
 dependencies = [
     "pygame-ce>=2.4.0",
