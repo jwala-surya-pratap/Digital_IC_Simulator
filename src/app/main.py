@@ -7,14 +7,6 @@ from ui import Button
 class UiState(Enum):
     WORLD_VIEW = 1
 
-class ComponentData:
-    x: int = 0
-    y: int = 0
-
-    def __init__(self, x: int, y: int):
-        self.x = x
-        self.y = y
-
 class App:
     WINDOW_WIDTH = 1280
     WINDOW_HEIGHT = 720
@@ -33,7 +25,7 @@ class App:
         # Fonts
         bold_font = pygame.font.Font("assets/fonts/JetBrainsMono-Bold.ttf")
 
-        self.add_button = Button(10, 10, 50, 50, "+", bold_font)
+        self.add_button = Button(self.WINDOW_WIDTH - 60, self.WINDOW_HEIGHT - 60, 50, 50, "+", bold_font)
 
     def event(self, event: pygame.event.Event):
         self.add_button.event(event)
