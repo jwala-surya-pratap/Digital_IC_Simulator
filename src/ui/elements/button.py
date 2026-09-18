@@ -1,9 +1,11 @@
 from typing import Tuple
 import pygame
 
+from ui.ui_element import UiElement
+
 ColorTuple = Tuple[int, int, int]
 
-class Button:
+class Button(UiElement):
     def __init__(
         self, 
         x: int, 

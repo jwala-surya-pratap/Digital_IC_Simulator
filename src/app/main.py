@@ -2,7 +2,7 @@ from enum import Enum
 import pygame
 import sys
 
-from ui import Button
+from ui import *
 
 class UiState(Enum):
     WORLD_VIEW = 1
@@ -20,27 +20,23 @@ class App:
         self.clock = pygame.time.Clock()
 
         # === [UI] ===
-        self.ui_state = UiState.WORLD_VIEW
-
         # Fonts
         bold_font = pygame.font.Font("assets/fonts/JetBrainsMono-Bold.ttf")
 
-        self.add_button = Button(self.WINDOW_WIDTH - 60, self.WINDOW_HEIGHT - 60, 50, 50, "+", bold_font)
+
+        self.ui_state = UiState.WORLD_VIEW
+        self.ui = Ui()
+
+        self.ui.add_element("add_button", Button(self.WINDOW_WIDTH - 60, self.WINDOW_HEIGHT - 60, 50, 50, "+", bold_font))
 
     def event(self, event: pygame.event.Event):
-        self.add_button.event(event)
-
-        match self.ui_state:
-            case UiState.WORLD_VIEW:
-                if self.add_button.is_pressed():
-                    pass
-
+        self.ui.event(event)
 
     def update(self):
-        pass
+        self.ui.update()
 
     def render(self):
-        self.add_button.render(self.display)
+        self.ui.render(self.display)
 
     def run(self):
         running = True
