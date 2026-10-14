@@ -4,7 +4,6 @@ no_of_ics: int = 0
 
 
 class IC:
-
     def __init__(self, no_of_inputs: int, no_of_outputs: int):
         self.no_of_inputs = no_of_inputs
         self.no_of_outputs = no_of_outputs
@@ -22,6 +21,7 @@ class IC:
         for i in range(self.no_of_inputs):
             entry = int(input(f"Input {i}: "))
             Manager.node_values.update({self.input_nodes[i]: entry})
+
 
 class TestIC(IC):
     def __init__(self):
