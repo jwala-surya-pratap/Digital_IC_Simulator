@@ -1,4 +1,5 @@
 from core.components.and_component import TwoInputAndComponent
+from core.components.or_component import TwoInputOrComponent
 from core.manager import ComponentManager
 
 
@@ -9,12 +10,12 @@ def test_manager():
     node_y = manager.create_node()
     node_z = manager.create_node()
 
-    manager.set_node_value(node_x, 0)
+    manager.set_node_value(node_x, 1)
     manager.set_node_value(node_y, 1)
-    manager.set_node_value(node_z, 1)
+    manager.set_node_value(node_z, 0)
 
     comp0 = manager.add_component(TwoInputAndComponent())
-    comp1 = manager.add_component(TwoInputAndComponent())
+    comp1 = manager.add_component(TwoInputOrComponent())
 
     comp0_inputs = manager.get_component_input_nodes(comp0)
     assert comp0_inputs is not None
@@ -34,4 +35,4 @@ def test_manager():
 
     manager.evaluate([comp0, comp1])
 
-    assert manager.get_node_value(comp1_outputs[0]) == 0
+    assert manager.get_node_value(comp1_outputs[0]) == 1
