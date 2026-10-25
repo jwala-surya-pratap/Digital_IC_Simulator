@@ -1,0 +1,78 @@
+from typing import Callable, Tuple
+import pygame
+from typing_extensions import TypeIs
+
+from app.ui.manager import UiElement
+
+ColorTuple = Tuple[int, int, int]
+class Button(UiElement):
+    def __init__(
+        self,
+        x: int,
+        y: int,
+        width: int,
+        height: int,
+        text: str,
+        font: pygame.font.Font,
+        bg_color: ColorTuple = (50, 50, 50),
+        hover_color: ColorTuple = (80, 80, 80),
+        text_color: ColorTuple = (255, 255, 255),
+        border_radius: int = 12,
+        border_color: ColorTuple | None = None,
+        border_width: int = 0,
+        on_click: Callable[[], None] | None = None,
+    ) -> None:
+        self.rect: pygame.Rect = pygame.Rect(x, y, width, height)
+        self.text: str = text
+        self.font: pygame.font.Font = font
+        self.bg_color: ColorTuple = bg_color
+        self.hover_color: ColorTuple = hover_color
+        self.text_color: ColorTuple = text_color
+        self.border_radius: int = border_radius
+        self.border_color: ColorTuple | None = border_color
+        self.border_width: int = border_width
+        self.on_click: Callable[[], None] | None = on_click
+
+        self.is_hovered: bool = False
+        self.pressed: bool = False
+
+    def render(self, surface: pygame.Surface) -> None:
+        color: ColorTuple = self.hover_color if self.is_hovered else self.bg_color
+
+        pygame.draw.rect(surface, color, self.rect, border_radius=self.border_radius)
+
+        if self.border_color and self.border_width > 0:
+            pygame.draw.rect(
+                surface,
+                self.border_color,
+                self.rect,
+                width=self.border_width,
+                border_radius=self.border_radius,
+            )
+
+        text_surf: pygame.Surface = self.font.render(self.text, True, self.text_color)
+        text_rect: pygame.Rect = text_surf.get_rect(center=self.rect.center)
+        surface.blit(text_surf, text_rect)
+
+    def update(self) -> None:
+        pass
+
+    def event(self, event: pygame.event.Event):
+        self.pressed = False
+        if event.type == pygame.MOUSEMOTION:
+            pos: Tuple[int, int] = getattr(event, "pos", (0, 0))
+            self.is_hovered = self.rect.collidepoint(pos)
+
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            button: int = getattr(event, "button", 0)
+            if button == 1 and self.is_hovered:
+                self.pressed = True
+                if self.on_click is not None:
+                    self.on_click()
+
+    def is_pressed(self) -> bool:
+        return self.pressed
+
+def is_button(obj: UiElement | None) -> TypeIs[Button]:
+    assert obj != None
+    return isinstance(obj, Button)
