@@ -5,7 +5,10 @@ class OneInputNotComponent(Component):
         super().__init__("NOT", 1, 1)
 
     def evaluate(self, input_node_values: dict[int, int]) -> dict[int, int]:
-        output_value: int = not input_node_values[self.input_nodes[0]]
+        output_value: int = 0
+        if input_node_values[self.input_nodes[0]] == 0:
+            output_value = 1
+
         return {
             self.output_nodes[0]: output_value
         }
