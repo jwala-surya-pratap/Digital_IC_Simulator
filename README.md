@@ -5,8 +5,8 @@ A digital IC simulator based in python
 - [X] A crude blueprint of the IC
 - [X] Get a basic manager class working
 - [X] Run a test simulation with just the core components
-- [ ] Automatic ordering of IC execution
-- [ ] Build the basic UI
-- [ ] Wire add button to a basic IC
-- [ ] Make simple wire connections between nodes work
-- [ ] Add more ICs
+- [X] Automatic ordering of IC execution
+- [X] Build the basic UI
+- [X] Wire add button to a basic IC
+- [X] Make simple wire connections between nodes work
+- [X] Add more ICs
